@@ -7,300 +7,251 @@
   <meta name="description" content="SideStacks is the financial tracking app built for freelancers, resellers, and small business owners. Track income, expenses, invoices, mileage, and taxes – all in one place." />
   <link rel="icon" type="image/png" href="assets/logo_teal.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --teal:    #14B8A6;
-      --teal-dim:#0d9488;
-      --navy:    #0F172A;
-      --navy2:   #1E293B;
-      --navy3:   #334155;
-      --white:   #FFFFFF;
-      --off:     #F8FAFC;
-      --muted:   #94A3B8;
-      --text:    #E2E8F0;
+      --teal:     #14B8A6;
+      --teal-dim: #0d9488;
+      --teal-pale:rgba(20,184,166,0.1);
+      --navy:     #0B1120;
+      --navy2:    #111827;
+      --navy3:    #1F2937;
+      --navy4:    #374151;
+      --white:    #FFFFFF;
+      --muted:    #9CA3AF;
+      --text:     #D1D5DB;
+      --border:   rgba(255,255,255,0.07);
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--navy);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAV ─────────────────────────────────────────────── */
+    /* ─── NAV ──────────────────────────────────────────────────── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 64px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      height: 68px;
-      background: rgba(15,23,42,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 clamp(20px, 5%, 80px);
+      background: rgba(11,17,32,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo img { height: 32px; width: 32px; }
-    .nav-logo span { font-size: 18px; font-weight: 700; color: var(--white); letter-spacing: -0.3px; }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta {
-      background: var(--teal); color: var(--navy);
-      padding: 10px 22px; border-radius: 8px;
-      font-size: 14px; font-weight: 700; text-decoration: none;
-      transition: background .2s, transform .15s;
-    }
-    .nav-cta:hover { background: var(--teal-dim); transform: translateY(-1px); color: var(--navy); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .nav-logo img { height: 30px; width: 30px; }
+    .nav-logo span { font-size: 17px; font-weight: 700; color: var(--white); letter-spacing: -0.4px; }
+    .nav-center { display: flex; align-items: center; gap: 28px; }
+    .nav-center a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; white-space: nowrap; }
+    .nav-center a:hover { color: var(--white); }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .btn-nav-ghost { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 8px; transition: color .15s, background .15s; white-space: nowrap; }
+    .btn-nav-ghost:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .btn-nav-solid { background: var(--teal); color: var(--navy); font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 8px; text-decoration: none; transition: background .15s; white-space: nowrap; }
+    .btn-nav-solid:hover { background: var(--teal-dim); }
+    .nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-mobile-toggle span { display: block; width: 20px; height: 2px; background: var(--white); border-radius: 2px; margin: 4px 0; transition: .3s; }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy2); border-bottom: 1px solid var(--border); padding: 16px 20px 24px; z-index: 199; flex-direction: column; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 16px; font-weight: 500; padding: 12px 8px; border-radius: 8px; transition: background .15s; }
+    .mobile-menu a:hover { background: var(--navy3); }
+    .mobile-menu .btn-nav-solid { margin-top: 8px; text-align: center; display: block; padding: 14px; }
 
-    /* ── HERO ────────────────────────────────────────────── */
+    /* ─── HERO ─────────────────────────────────────────────────── */
     .hero {
-      min-height: 100vh;
+      min-height: 100svh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
-      padding: 120px 5% 80px;
-      position: relative; overflow: hidden;
+      padding: 120px clamp(20px, 6%, 80px) 80px;
+      position: relative;
     }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(20,184,166,0.12) 0%, transparent 70%);
+    .hero-glow {
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse at center, rgba(20,184,166,0.13) 0%, transparent 65%);
       pointer-events: none;
     }
-    .hero-badge {
+    .hero-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.3);
-      color: var(--teal); padding: 6px 16px; border-radius: 100px;
-      font-size: 13px; font-weight: 600; margin-bottom: 32px;
-      letter-spacing: 0.3px;
+      border: 1px solid rgba(20,184,166,0.35);
+      background: rgba(20,184,166,0.07);
+      color: var(--teal); padding: 5px 14px 5px 10px;
+      border-radius: 100px; font-size: 13px; font-weight: 600;
+      margin-bottom: 28px; letter-spacing: 0.2px;
     }
-    .hero-badge span { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; display: inline-block; }
+    .hero-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
     .hero h1 {
-      font-size: clamp(42px, 7vw, 88px);
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      color: var(--white);
-      margin-bottom: 24px;
-      max-width: 820px;
+      font-size: clamp(40px, 6.5vw, 80px);
+      font-weight: 900; line-height: 1.04;
+      letter-spacing: clamp(-1.5px, -0.03em, -3px);
+      color: var(--white); max-width: 800px; margin-bottom: 20px;
     }
-    .hero h1 em { font-style: normal; color: var(--teal); }
-    .hero p {
-      font-size: clamp(16px, 2vw, 20px);
-      color: var(--muted);
-      max-width: 540px;
-      line-height: 1.65;
-      margin-bottom: 48px;
+    .hero h1 .accent { color: var(--teal); }
+    .hero-sub {
+      font-size: clamp(15px, 1.8vw, 18px); color: var(--muted);
+      max-width: 480px; line-height: 1.7; margin-bottom: 40px;
     }
-    .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--teal); color: var(--navy);
-      padding: 14px 32px; border-radius: 10px;
-      font-size: 16px; font-weight: 700; text-decoration: none;
-      transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 0 32px rgba(20,184,166,0.25);
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 700; text-decoration: none;
+      transition: background .15s, transform .15s;
+      box-shadow: 0 0 28px rgba(20,184,166,0.22);
     }
-    .btn-primary:hover { background: var(--teal-dim); transform: translateY(-2px); box-shadow: 0 0 48px rgba(20,184,166,0.35); }
-    .btn-secondary {
+    .btn-primary:hover { background: var(--teal-dim); transform: translateY(-2px); }
+    .btn-ghost {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.06); color: var(--white);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 14px 32px; border-radius: 10px;
-      font-size: 16px; font-weight: 600; text-decoration: none;
-      transition: background .2s, transform .15s;
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+      padding: 13px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      transition: background .15s, border-color .15s, transform .15s;
     }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
-
-    .hero-mockup {
-      margin-top: 72px;
-      width: 100%; max-width: 900px;
+    .btn-ghost:hover { background: var(--navy3); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
+    .hero-screenshot {
+      margin-top: 64px; width: 100%; max-width: 860px;
+      border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55);
       background: var(--navy2);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
       aspect-ratio: 16/9;
       display: flex; align-items: center; justify-content: center;
       position: relative;
     }
-    .hero-mockup-placeholder {
-      display: flex; flex-direction: column; align-items: center; gap: 16px; color: var(--navy3);
-    }
-    .hero-mockup-placeholder img { width: 64px; height: 64px; opacity: 0.3; }
-    .hero-mockup-placeholder p { font-size: 14px; }
-    .mockup-bar {
-      position: absolute; top: 0; left: 0; right: 0; height: 36px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      display: flex; align-items: center; padding: 0 16px; gap: 8px;
-    }
-    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .screenshot-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .screenshot-placeholder img { width: 52px; height: 52px; opacity: 0.18; }
+    .screenshot-placeholder p { font-size: 13px; color: var(--navy4); }
 
-    /* ── SECTION SHARED ──────────────────────────────────── */
-    section { padding: 100px 5%; }
-    .section-label {
-      font-size: 12px; font-weight: 700; letter-spacing: 2px;
-      color: var(--teal); text-transform: uppercase; margin-bottom: 16px;
+    /* ─── DIVIDER STRIP ────────────────────────────────────────── */
+    .strip {
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--navy2); padding: 44px clamp(20px,5%,80px);
     }
-    .section-title {
-      font-size: clamp(30px, 4vw, 48px);
-      font-weight: 800; letter-spacing: -1px;
-      color: var(--white); line-height: 1.1; margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 17px; color: var(--muted);
-      max-width: 520px; line-height: 1.65; margin-bottom: 60px;
-    }
-    .centered { text-align: center; }
-    .centered .section-sub { margin-left: auto; margin-right: auto; }
+    .strip-inner { display: grid; grid-template-columns: repeat(4,1fr); max-width: 860px; margin: 0 auto; }
+    .strip-item { text-align: center; padding: 12px 16px; border-right: 1px solid var(--border); }
+    .strip-item:last-child { border-right: none; }
+    .strip-val { font-size: 32px; font-weight: 900; color: var(--white); letter-spacing: -1px; line-height: 1; }
+    .strip-val .teal { color: var(--teal); }
+    .strip-lbl { font-size: 12px; color: var(--muted); margin-top: 5px; font-weight: 500; letter-spacing: 0.2px; }
 
-    /* ── STATS ───────────────────────────────────────────── */
-    .stats { background: var(--navy2); border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 56px 5%; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); max-width: 900px; margin: 0 auto; gap: 0; }
-    .stat-item { text-align: center; padding: 20px; border-right: 1px solid rgba(255,255,255,0.06); }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 40px; font-weight: 900; color: var(--teal); letter-spacing: -1px; }
-    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+    /* ─── SECTION BASE ─────────────────────────────────────────── */
+    .section { padding: 96px clamp(20px,5%,80px); }
+    .section.alt { background: var(--navy2); }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+    .section-h { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; color: var(--white); letter-spacing: -0.8px; line-height: 1.1; margin-bottom: 14px; }
+    .section-p { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 500px; }
+    .tc { text-align: center; }
+    .tc .section-p { margin: 0 auto 56px; }
 
-    /* ── FEATURES ────────────────────────────────────────── */
-    .features { background: var(--navy); }
-    .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
-    .feature-card {
-      background: var(--navy2); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px; padding: 32px;
-      transition: border-color .2s, transform .2s;
-    }
-    .feature-card:hover { border-color: rgba(20,184,166,0.3); transform: translateY(-3px); }
-    .feature-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(20,184,166,0.12);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; font-size: 22px;
-    }
-    .feature-card h3 { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    /* ─── FEATURES ─────────────────────────────────────────────── */
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 1040px; margin: 0 auto; }
+    .feat-cell { background: var(--navy2); padding: 32px 28px; transition: background .2s; }
+    .feat-cell:hover { background: var(--navy3); }
+    .feat-icon { width: 40px; height: 40px; margin-bottom: 18px; color: var(--teal); }
+    .feat-cell h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .feat-cell p { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
-    /* ── HOW IT WORKS ────────────────────────────────────── */
-    .how { background: var(--navy2); }
-    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; max-width: 900px; margin: 0 auto; }
-    .step { text-align: center; }
-    .step-num {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.3);
-      color: var(--teal); font-size: 20px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-    }
-    .step h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-    .step p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-    .step-connector { display: none; }
+    /* ─── HOW IT WORKS ─────────────────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 860px; margin: 0 auto; }
+    .step { padding: 32px; background: var(--navy); border: 1px solid var(--border); border-radius: 14px; }
+    .step-n { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--teal); margin-bottom: 16px; text-transform: uppercase; }
+    .step h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .step p { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
-    /* ── PRICING ─────────────────────────────────────────── */
-    .pricing { background: var(--navy); }
-    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 760px; margin: 0 auto; }
-    .pricing-card {
-      background: var(--navy2); border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 20px; padding: 40px; position: relative; overflow: hidden;
+    /* ─── DISCLAIMER ───────────────────────────────────────────── */
+    .disclaimer-box {
+      max-width: 860px; margin: 0 auto;
+      border: 1px solid rgba(251,191,36,0.25);
+      background: rgba(251,191,36,0.04);
+      border-radius: 14px; padding: 28px 32px;
+      display: flex; gap: 18px; align-items: flex-start;
     }
-    .pricing-card.featured {
-      border-color: var(--teal);
-      background: linear-gradient(135deg, rgba(20,184,166,0.08) 0%, var(--navy2) 60%);
-    }
-    .pricing-badge {
-      position: absolute; top: 20px; right: 20px;
-      background: var(--teal); color: var(--navy);
-      font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 100px;
-      letter-spacing: 0.5px;
-    }
-    .pricing-plan { font-size: 13px; font-weight: 700; color: var(--teal); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
-    .pricing-price { font-size: 48px; font-weight: 900; color: var(--white); letter-spacing: -2px; line-height: 1; }
-    .pricing-price span { font-size: 18px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
-    .pricing-desc { font-size: 14px; color: var(--muted); margin: 12px 0 28px; line-height: 1.5; }
-    .pricing-features { list-style: none; margin-bottom: 32px; }
-    .pricing-features li { font-size: 14px; color: var(--text); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; }
-    .pricing-features li:last-child { border-bottom: none; }
-    .pricing-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
-    .pricing-features li.dim::before { content: '–'; color: var(--navy3); }
-    .pricing-features li.dim { color: var(--navy3); }
-    .btn-plan {
-      display: block; width: 100%; text-align: center;
-      padding: 14px; border-radius: 10px;
-      font-size: 15px; font-weight: 700; text-decoration: none;
-      transition: .2s;
-    }
-    .btn-plan-outline { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--white); }
-    .btn-plan-outline:hover { background: rgba(255,255,255,0.07); }
-    .btn-plan-solid { background: var(--teal); color: var(--navy); box-shadow: 0 0 24px rgba(20,184,166,0.2); }
-    .btn-plan-solid:hover { background: var(--teal-dim); }
+    .disclaimer-icon { flex-shrink: 0; margin-top: 2px; color: #FBBF24; }
+    .disclaimer-box h3 { font-size: 15px; font-weight: 700; color: #FDE68A; margin-bottom: 8px; }
+    .disclaimer-box p { font-size: 13px; color: #D1C888; line-height: 1.65; }
 
-    /* ── DOWNLOAD ────────────────────────────────────────── */
-    .download {
-      background: var(--navy2);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      text-align: center;
-      padding: 100px 5%;
-      position: relative; overflow: hidden;
-    }
-    .download::before {
-      content: '';
-      position: absolute; bottom: -60%; left: 50%; transform: translateX(-50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(20,184,166,0.08) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .download h2 { font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: var(--white); letter-spacing: -1.5px; margin-bottom: 16px; }
-    .download p { font-size: 18px; color: var(--muted); margin-bottom: 44px; }
-    .store-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .store-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--navy); border: 1px solid rgba(255,255,255,0.12);
-      padding: 14px 28px; border-radius: 12px; text-decoration: none;
-      transition: .2s; color: var(--white);
-    }
-    .store-btn:hover { border-color: var(--teal); background: rgba(20,184,166,0.05); }
-    .store-btn-icon { font-size: 28px; line-height: 1; }
-    .store-btn-text { text-align: left; }
-    .store-btn-text small { display: block; font-size: 11px; color: var(--muted); font-weight: 500; }
-    .store-btn-text strong { display: block; font-size: 17px; font-weight: 700; }
+    /* ─── PRICING ──────────────────────────────────────────────── */
+    .pricing-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px; margin: 0 auto; }
+    .p-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 18px; padding: 36px 32px; position: relative; }
+    .p-card.pro { border-color: var(--teal); background: linear-gradient(160deg, rgba(20,184,166,0.07) 0%, var(--navy2) 55%); }
+    .p-badge { position: absolute; top: -1px; right: 24px; background: var(--teal); color: var(--navy); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 4px 12px; border-radius: 0 0 8px 8px; text-transform: uppercase; }
+    .p-tier { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .p-price { font-size: 52px; font-weight: 900; color: var(--white); letter-spacing: -2px; line-height: 1; }
+    .p-price sub { font-size: 18px; font-weight: 500; color: var(--muted); letter-spacing: 0; vertical-align: bottom; margin-bottom: 4px; display: inline-block; }
+    .p-desc { font-size: 13px; color: var(--muted); margin: 10px 0 24px; line-height: 1.55; }
+    .p-list { list-style: none; margin-bottom: 28px; }
+    .p-list li { font-size: 13px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; color: var(--text); }
+    .p-list li:last-child { border-bottom: none; }
+    .p-list li svg { flex-shrink: 0; }
+    .p-list li.off { color: var(--navy4); }
+    .p-list li.off svg { color: var(--navy4); }
+    .p-btn { display: block; width: 100%; text-align: center; padding: 13px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: .15s; }
+    .p-btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .p-btn-outline:hover { background: var(--navy3); border-color: rgba(255,255,255,0.12); }
+    .p-btn-fill { background: var(--teal); color: var(--navy); }
+    .p-btn-fill:hover { background: var(--teal-dim); }
 
-    /* ── FOOTER ──────────────────────────────────────────── */
-    footer {
-      background: var(--navy);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 48px 5% 32px;
+    /* ─── DOWNLOAD ─────────────────────────────────────────────── */
+    .dl-section { text-align: center; position: relative; overflow: hidden; }
+    .dl-glow { position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%); width: 600px; height: 500px; background: radial-gradient(circle, rgba(20,184,166,0.09) 0%, transparent 65%); pointer-events: none; }
+    .dl-section h2 { font-size: clamp(30px,4.5vw,52px); font-weight: 900; color: var(--white); letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 12px; }
+    .dl-section p { font-size: 16px; color: var(--muted); margin-bottom: 40px; }
+    .dl-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--navy3); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); text-decoration: none;
+      padding: 14px 24px; border-radius: 12px; transition: .15s;
+      min-width: 180px;
     }
-    .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; max-width: 1100px; margin: 0 auto; }
-    .footer-brand img { height: 32px; margin-bottom: 10px; }
-    .footer-brand p { font-size: 13px; color: var(--muted); max-width: 220px; line-height: 1.6; }
-    .footer-links h4 { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
-    .footer-links a { display: block; font-size: 14px; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color .2s; }
-    .footer-links a:hover { color: var(--white); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); margin-top: 40px; padding-top: 24px; text-align: center; font-size: 13px; color: var(--navy3); max-width: 1100px; margin-left: auto; margin-right: auto; }
+    .dl-btn:hover { border-color: var(--teal); background: rgba(20,184,166,0.07); }
+    .dl-btn svg { flex-shrink: 0; color: var(--white); }
+    .dl-btn-text small { display: block; font-size: 11px; color: var(--muted); }
+    .dl-btn-text strong { display: block; font-size: 16px; font-weight: 700; }
 
-    /* ── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .features-grid { grid-template-columns: 1fr 1fr; }
-      .stats-grid { grid-template-columns: repeat(2,1fr); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.06); }
-      .stat-item:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.06); border-right: none; }
+    /* ─── FOOTER ───────────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--border); padding: 48px clamp(20px,5%,80px) 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1040px; margin: 0 auto 40px; }
+    .footer-brand img { height: 28px; margin-bottom: 10px; display: block; }
+    .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.65; max-width: 220px; }
+    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy4); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color .15s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1040px; margin: 0 auto; }
+    .footer-bottom p { font-size: 12px; color: var(--navy4); }
+    .footer-bottom a { font-size: 12px; color: var(--navy4); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--muted); }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .feat-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 680px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .features-grid { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      .nav-center, .nav-right { display: none; }
+      .nav-mobile-toggle { display: block; }
+      .strip-inner { grid-template-columns: repeat(2,1fr); }
+      .strip-item:nth-child(2) { border-right: none; }
+      .strip-item:nth-child(3) { border-top: 1px solid var(--border); }
+      .strip-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .feat-grid { grid-template-columns: 1fr; }
       .steps { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .hero h1 { letter-spacing: -1.5px; }
-      .stats-grid { grid-template-columns: repeat(2,1fr); }
-      nav { padding: 0 4%; }
-      section { padding: 72px 5%; }
+      .pricing-wrap { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .hero-actions a { width: 100%; max-width: 300px; justify-content: center; }
+      .disclaimer-box { flex-direction: column; gap: 12px; }
+      .dl-btns { flex-direction: column; align-items: center; }
+      .dl-btn { width: 100%; max-width: 280px; justify-content: center; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 440px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .p-card { padding: 28px 20px; }
+      .strip-val { font-size: 26px; }
     }
   </style>
 </head>
@@ -312,192 +263,252 @@
     <img src="assets/logo_white.png" alt="SideStacks" />
     <span>SideStacks</span>
   </a>
-  <div class="nav-links">
+  <div class="nav-center">
     <a href="#features">Features</a>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="contact.html">Contact</a>
-    <a href="#download" class="nav-cta">Download</a>
   </div>
-  <div class="hamburger" onclick="document.querySelector('.nav-links').style.display='flex';this.style.display='none'">
+  <div class="nav-right">
+    <a href="contact.html" class="btn-nav-ghost">Support</a>
+    <a href="#download" class="btn-nav-solid">Download</a>
+  </div>
+  <button class="nav-mobile-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
+<div class="mobile-menu">
+  <a href="#features" onclick="this.closest('.mobile-menu').classList.remove('open')">Features</a>
+  <a href="#how" onclick="this.closest('.mobile-menu').classList.remove('open')">How it works</a>
+  <a href="#pricing" onclick="this.closest('.mobile-menu').classList.remove('open')">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <a href="#download" class="btn-nav-solid" onclick="this.closest('.mobile-menu').classList.remove('open')">Download the app</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge"><span></span>Now available on Android</div>
-  <h1>Every hustle.<br /><em>One app.</em></h1>
-  <p>SideStacks keeps your income, expenses, invoices, and tax in one clean dashboard — built for freelancers, resellers, and side business owners.</p>
-  <div class="hero-buttons">
+  <div class="hero-glow"></div>
+  <div class="hero-pill">
+    <span class="hero-pill-dot"></span>
+    Now available on Android
+  </div>
+  <h1>Stop losing track<br />of <span class="accent">your money.</span></h1>
+  <p class="hero-sub">You're already putting in the work. SideStacks makes sure you actually know what you're earning, what you owe, and what you can claim back.</p>
+  <div class="hero-actions">
     <a href="#download" class="btn-primary">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.35.74 3.15.8 1.2-.21 2.34-.91 3.62-.79 1.54.14 2.7.73 3.44 1.84-3.17 1.9-2.67 6.04.54 7.24-.64 1.7-1.46 3.37-2.75 4.79zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.35.74 3.15.8 1.2-.21 2.34-.91 3.62-.79 1.54.14 2.7.73 3.44 1.84-3.17 1.9-2.67 6.04.54 7.24-.64 1.7-1.46 3.37-2.75 4.79zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
       Download on Android
     </a>
-    <a href="#features" class="btn-secondary">See features</a>
+    <a href="#features" class="btn-ghost">Explore features</a>
   </div>
-
-  <div class="hero-mockup">
-    <div class="mockup-bar">
-      <div class="mockup-dot" style="background:#FF5F57"></div>
-      <div class="mockup-dot" style="background:#FFBD2E"></div>
-      <div class="mockup-dot" style="background:#28CA41"></div>
-    </div>
-    <div class="hero-mockup-placeholder">
-      <img src="assets/logo_teal.png" alt="SideStacks" />
+  <div class="hero-screenshot">
+    <div class="screenshot-placeholder">
+      <img src="assets/logo_teal.png" alt="" />
       <p>App screenshots coming soon</p>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-num">$0</div>
-      <div class="stat-label">To get started</div>
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">
+      <div class="strip-val">$<span class="teal">0</span></div>
+      <div class="strip-lbl">To get started</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">5 min</div>
-      <div class="stat-label">Setup time</div>
+    <div class="strip-item">
+      <div class="strip-val"><span class="teal">5</span> min</div>
+      <div class="strip-lbl">Setup time</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">ATO</div>
-      <div class="stat-label">Compliant mileage</div>
+    <div class="strip-item">
+      <div class="strip-val"><span class="teal">ATO</span></div>
+      <div class="strip-lbl">Compliant mileage</div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">GST</div>
-      <div class="stat-label">Ready for BAS</div>
+    <div class="strip-item">
+      <div class="strip-val"><span class="teal">GST</span></div>
+      <div class="strip-lbl">BAS ready</div>
     </div>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section class="features" id="features">
-  <div class="centered">
-    <div class="section-label">Features</div>
-    <h2 class="section-title">Everything your side hustle needs</h2>
-    <p class="section-sub">Purpose-built for Australians running freelance work, reselling businesses, and multiple income streams.</p>
+<section class="section" id="features">
+  <div class="tc">
+    <p class="eyebrow">Features</p>
+    <h2 class="section-h">Built for how you actually work</h2>
+    <p class="section-p">No jargon. No 47-step setup. Just the tools you need to stay on top of your money without it taking over your life.</p>
   </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">💰</div>
+  <div class="feat-grid">
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
       <h3>Income &amp; Expense Tracking</h3>
-      <p>Log every transaction in seconds. Categorise income and expenses across multiple businesses, with receipt photo attachments.</p>
+      <p>Add a transaction in the time it takes to unlock your phone. Every dollar in and out, across as many businesses as you run.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧾</div>
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
       <h3>Invoice Generation</h3>
-      <p>Create professional invoices with GST, ABN, and client details. Generate and share PDFs directly from the app.</p>
+      <p>Send a proper invoice without needing Word, a template, or any of that. Fill in the details, hit send, get paid.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🚗</div>
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
       <h3>Mileage Tracking</h3>
-      <p>Log business trips and automatically calculate your ATO mileage deduction at $0.85/km, capped at 5,000 km per year.</p>
+      <p>Every work trip you drive is money back at tax time. Log it as you go and SideStacks works out your ATO deduction automatically.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       <h3>Tax &amp; BAS Estimates</h3>
-      <p>Know what you owe before tax time. Automatic GST calculations, BAS summaries, and deductible expense tracking.</p>
+      <p>No more end-of-year panic. Get a running estimate of what you owe, your GST position, and what you can claim — updated as you go.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">🏦</div>
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
       <h3>Bank Import</h3>
-      <p>Connect your bank securely via Open Banking. Import transactions automatically — review and categorise in one tap.</p>
+      <p>Connect your bank once and pull in transactions automatically. Less manual entry, more time actually running your business.</p>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">📈</div>
+    <div class="feat-cell">
+      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       <h3>Analytics Dashboard</h3>
-      <p>Profit trends, client insights, hourly rate analysis, anomaly detection, and goal tracking — all in one live dashboard.</p>
+      <p>Find out which client actually pays the most per hour, which month tanks every year, and whether you're actually on track for your goals.</p>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="centered">
-    <div class="section-label">How it works</div>
-    <h2 class="section-title">Up and running in minutes</h2>
-    <p class="section-sub">No accountant required. No spreadsheets. Just open the app and go.</p>
+<section class="section alt" id="how">
+  <div class="tc">
+    <p class="eyebrow">How it works</p>
+    <h2 class="section-h">Seriously, it takes minutes</h2>
+    <p class="section-p" style="margin-bottom:48px">No tutorial. No demo call. No "implementation consultant". Just download, create a stack, and start logging.</p>
   </div>
   <div class="steps">
     <div class="step">
-      <div class="step-num">1</div>
+      <p class="step-n">Step 01</p>
       <h3>Create your SideStack</h3>
-      <p>Add each of your businesses or income streams as a separate &ldquo;stack&rdquo;. Freelancing, reselling, content — keep them all clean and separate.</p>
+      <p>Got a freelance gig, a reselling side hustle, and some content money coming in? Give each one its own stack so nothing bleeds together.</p>
     </div>
     <div class="step">
-      <div class="step-num">2</div>
+      <p class="step-n">Step 02</p>
       <h3>Log or import transactions</h3>
-      <p>Add transactions manually in seconds, or connect your bank to import them automatically. Attach receipts, add notes, categorise on the fly.</p>
+      <p>Tap to log something as it happens, or let the bank import handle the bulk of it. Either way, you're done in seconds, not an hour on Sunday night.</p>
     </div>
     <div class="step">
-      <div class="step-num">3</div>
+      <p class="step-n">Step 03</p>
       <h3>Know your numbers</h3>
-      <p>Your profit, tax estimate, GST, and mileage deduction update in real time. No surprises at the end of the financial year.</p>
+      <p>Your dashboard updates as you go. You'll always know roughly what you've made, what you owe, and what you can claim — without waiting for tax time to find out.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<section class="section">
+  <div class="disclaimer-box">
+    <svg class="disclaimer-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <div>
+      <h3>Heads up &mdash; these are estimates, not advice</h3>
+      <p>Everything SideStacks shows you &mdash; your tax estimate, GST position, BAS summary, mileage deduction &mdash; is calculated from the data <em>you</em> enter, using standard published rates. It's meant to keep you informed, not replace your accountant. Before you lodge anything or make a financial decision based on these numbers, please talk to a registered tax agent or accountant. They're worth it.</p>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="centered">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-title">Start free. Upgrade when you&rsquo;re ready.</h2>
-    <p class="section-sub">No credit card required to get started.</p>
+<section class="section alt" id="pricing">
+  <div class="tc">
+    <p class="eyebrow">Pricing</p>
+    <h2 class="section-h">Start free. Upgrade when ready.</h2>
+    <p class="section-p" style="margin-bottom:48px">No credit card required to get started.</p>
   </div>
-  <div class="pricing-grid">
-    <div class="pricing-card">
-      <div class="pricing-plan">Free</div>
-      <div class="pricing-price">$0</div>
-      <div class="pricing-desc">Everything you need to get started tracking your side hustle.</div>
-      <ul class="pricing-features">
-        <li>Unlimited stacks</li>
-        <li>90-day transaction history</li>
-        <li>Invoice generation</li>
-        <li>Mileage tracking</li>
-        <li>Tax &amp; GST estimates</li>
-        <li class="dim">Full transaction history</li>
-        <li class="dim">Advanced analytics</li>
-        <li class="dim">Receipt attachments</li>
+  <div class="pricing-wrap">
+    <div class="p-card">
+      <p class="p-tier">Free</p>
+      <div class="p-price">$0</div>
+      <p class="p-desc">Everything you need to get started tracking your side hustle.</p>
+      <ul class="p-list">
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Unlimited stacks
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          90-day transaction history
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Invoice generation
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Mileage &amp; tax estimates
+        </li>
+        <li class="off">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Full transaction history
+        </li>
+        <li class="off">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Advanced analytics
+        </li>
+        <li class="off">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Receipt attachments &amp; bank import
+        </li>
       </ul>
-      <a href="#download" class="btn-plan btn-plan-outline">Get started free</a>
+      <a href="#download" class="p-btn p-btn-outline">Get started free</a>
     </div>
-    <div class="pricing-card featured">
-      <div class="pricing-badge">POPULAR</div>
-      <div class="pricing-plan">Pro</div>
-      <div class="pricing-price">$4.99<span>/mo</span></div>
-      <div class="pricing-desc">Everything in Free, plus the full suite of analytics and history tools.</div>
-      <ul class="pricing-features">
-        <li>Unlimited stacks</li>
-        <li>Full transaction history</li>
-        <li>Invoice generation</li>
-        <li>Mileage tracking</li>
-        <li>Tax &amp; GST estimates</li>
-        <li>Advanced analytics dashboard</li>
-        <li>Receipt photo attachments</li>
-        <li>Bank account import</li>
+    <div class="p-card pro">
+      <div class="p-badge">Popular</div>
+      <p class="p-tier">Pro</p>
+      <div class="p-price">$10<sub>/mo</sub></div>
+      <p class="p-desc">The full suite. Everything in Free, plus advanced tools for serious side hustlers.</p>
+      <ul class="p-list">
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Unlimited stacks
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Full transaction history
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Invoice generation &amp; PDF export
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Mileage &amp; tax estimates
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Advanced analytics dashboard
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Receipt photo attachments
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
+          Bank account import
+        </li>
       </ul>
-      <a href="#download" class="btn-plan btn-plan-solid">Get SideStacks Pro</a>
+      <a href="#download" class="p-btn p-btn-fill">Get SideStacks Pro</a>
     </div>
   </div>
 </section>
 
 <!-- DOWNLOAD -->
-<section class="download" id="download">
-  <h2>Start tracking<br />your hustle today.</h2>
-  <p>Free to download. Set up in under 5 minutes.</p>
-  <div class="store-buttons">
-    <a href="#" class="store-btn">
-      <div class="store-btn-icon">🤖</div>
-      <div class="store-btn-text">
+<section class="section dl-section" id="download">
+  <div class="dl-glow"></div>
+  <h2>Give it a go.<br />It&rsquo;s free.</h2>
+  <p>Download the app, create a stack, and see how it feels. No credit card, no trial period, no catch.</p>
+  <div class="dl-btns">
+    <a href="#" class="dl-btn">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.35.74 3.15.8 1.2-.21 2.34-.91 3.62-.79 1.54.14 2.7.73 3.44 1.84-3.17 1.9-2.67 6.04.54 7.24-.64 1.7-1.46 3.37-2.75 4.79zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      <div class="dl-btn-text">
         <small>Get it on</small>
         <strong>Google Play</strong>
       </div>
     </a>
-    <a href="#" class="store-btn" style="opacity:.45; pointer-events:none; cursor:default;">
-      <div class="store-btn-icon">🍎</div>
-      <div class="store-btn-text">
+    <a class="dl-btn" style="opacity:.4; pointer-events:none; cursor:default;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      <div class="dl-btn-text">
         <small>Coming soon to</small>
         <strong>App Store</strong>
       </div>
@@ -507,29 +518,35 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="footer-grid">
     <div class="footer-brand">
       <img src="assets/logo_white.png" alt="SideStacks" />
-      <p>Financial tracking for freelancers and side business owners.</p>
+      <p>Made for Australians running side hustles, freelance work, and small businesses. Built to keep things simple.</p>
     </div>
-    <div class="footer-links">
-      <h4>Product</h4>
+    <div class="footer-col">
+      <h5>Product</h5>
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#download">Download</a>
     </div>
-    <div class="footer-links">
-      <h4>Legal</h4>
+    <div class="footer-col">
+      <h5>Legal</h5>
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Use</a>
     </div>
-    <div class="footer-links">
-      <h4>Company</h4>
+    <div class="footer-col">
+      <h5>Company</h5>
       <a href="contact.html">Contact</a>
+      <a href="contact.html">Support</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2026 SideStacks. All rights reserved. &bull; sidestacksapp.com</p>
+    <p>&copy; 2026 SideStacks. All rights reserved.</p>
+    <div style="display:flex; gap:16px;">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="contact.html">Contact</a>
+    </div>
   </div>
 </footer>
 
