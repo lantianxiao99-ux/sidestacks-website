@@ -1,552 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SideStacks – Track Every Hustle</title>
-  <meta name="description" content="SideStacks is the financial tracking app built for freelancers, resellers, and small business owners. Track income, expenses, invoices, mileage, and taxes – all in one place." />
-  <link rel="icon" type="image/png" href="assets/logo_teal.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SideStacks: Track every hustle. Keep every dollar.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --teal:     #14B8A6;
-      --teal-dim: #0d9488;
-      --teal-pale:rgba(20,184,166,0.1);
-      --navy:     #0B1120;
-      --navy2:    #111827;
-      --navy3:    #1F2937;
-      --navy4:    #374151;
-      --white:    #FFFFFF;
-      --muted:    #9CA3AF;
-      --text:     #D1D5DB;
-      --border:   rgba(255,255,255,0.07);
-    }
+:root {
+  --bg: #080810;
+  --bg2: #0e0e1a;
+  --bg3: #13131f;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(108,99,216,0.4);
+  --purple: #6c63d8;
+  --purple-dim: rgba(108,99,216,0.12);
+  --green: #3ecf6c;
+  --green-dim: rgba(62,207,108,0.1);
+  --text1: #f0f0f8;
+  --text2: #9090a8;
+  --text3: #505068;
+  --font: 'Inter', system-ui, sans-serif;
+}
 
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text1);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
 
-    /* ─── NAV ──────────────────────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(20px, 5%, 80px);
-      background: rgba(11,17,32,0.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .nav-logo img { height: 30px; width: 30px; }
-    .nav-logo span { font-size: 17px; font-weight: 700; color: var(--white); letter-spacing: -0.4px; }
-    .nav-center { display: flex; align-items: center; gap: 28px; }
-    .nav-center a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; white-space: nowrap; }
-    .nav-center a:hover { color: var(--white); }
-    .nav-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-    .btn-nav-ghost { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 8px; transition: color .15s, background .15s; white-space: nowrap; }
-    .btn-nav-ghost:hover { color: var(--white); background: rgba(255,255,255,0.05); }
-    .btn-nav-solid { background: var(--teal); color: var(--navy); font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 8px; text-decoration: none; transition: background .15s; white-space: nowrap; }
-    .btn-nav-solid:hover { background: var(--teal-dim); }
-    .nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-    .nav-mobile-toggle span { display: block; width: 20px; height: 2px; background: var(--white); border-radius: 2px; margin: 4px 0; transition: .3s; }
-    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy2); border-bottom: 1px solid var(--border); padding: 16px 20px 24px; z-index: 199; flex-direction: column; gap: 4px; }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 16px; font-weight: 500; padding: 12px 8px; border-radius: 8px; transition: background .15s; }
-    .mobile-menu a:hover { background: var(--navy3); }
-    .mobile-menu .btn-nav-solid { margin-top: 8px; text-align: center; display: block; padding: 14px; }
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  background: rgba(8,8,16,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px; list-style: none;
+}
+.nav-links a { font-size: 14px; color: var(--text2); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text1); }
+.nav-cta {
+  font-size: 13px; font-weight: 600;
+  padding: 8px 18px; border-radius: 8px;
+  background: var(--purple-dim);
+  border: 1px solid rgba(108,99,216,0.35);
+  color: var(--purple);
+  transition: all 0.2s; cursor: pointer;
+}
+.nav-cta:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
 
-    /* ─── HERO ─────────────────────────────────────────────────── */
-    .hero {
-      min-height: 100svh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 120px clamp(20px, 6%, 80px) 80px;
-      position: relative;
-    }
-    .hero-glow {
-      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-      width: 800px; height: 600px;
-      background: radial-gradient(ellipse at center, rgba(20,184,166,0.13) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .hero-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      border: 1px solid rgba(20,184,166,0.35);
-      background: rgba(20,184,166,0.07);
-      color: var(--teal); padding: 5px 14px 5px 10px;
-      border-radius: 100px; font-size: 13px; font-weight: 600;
-      margin-bottom: 28px; letter-spacing: 0.2px;
-    }
-    .hero-pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
-    .hero h1 {
-      font-size: clamp(40px, 6.5vw, 80px);
-      font-weight: 900; line-height: 1.04;
-      letter-spacing: clamp(-1.5px, -0.03em, -3px);
-      color: var(--white); max-width: 800px; margin-bottom: 20px;
-    }
-    .hero h1 .accent { color: var(--teal); }
-    .hero-sub {
-      font-size: clamp(15px, 1.8vw, 18px); color: var(--muted);
-      max-width: 480px; line-height: 1.7; margin-bottom: 40px;
-    }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--teal); color: var(--navy);
-      padding: 13px 28px; border-radius: 10px;
-      font-size: 15px; font-weight: 700; text-decoration: none;
-      transition: background .15s, transform .15s;
-      box-shadow: 0 0 28px rgba(20,184,166,0.22);
-    }
-    .btn-primary:hover { background: var(--teal-dim); transform: translateY(-2px); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-      padding: 13px 28px; border-radius: 10px;
-      font-size: 15px; font-weight: 600; text-decoration: none;
-      transition: background .15s, border-color .15s, transform .15s;
-    }
-    .btn-ghost:hover { background: var(--navy3); border-color: rgba(255,255,255,0.14); transform: translateY(-2px); }
-    .hero-screenshot {
-      margin-top: 64px; width: 100%; max-width: 860px;
-      border-radius: 18px; overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 32px 80px rgba(0,0,0,0.55);
-      background: var(--navy2);
-      aspect-ratio: 16/9;
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .screenshot-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .screenshot-placeholder img { width: 52px; height: 52px; opacity: 0.18; }
-    .screenshot-placeholder p { font-size: 13px; color: var(--navy4); }
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 60px;
+  align-items: center;
+  padding: 120px 48px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-    /* ─── DIVIDER STRIP ────────────────────────────────────────── */
-    .strip {
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: var(--navy2); padding: 44px clamp(20px,5%,80px);
-    }
-    .strip-inner { display: grid; grid-template-columns: repeat(4,1fr); max-width: 860px; margin: 0 auto; }
-    .strip-item { text-align: center; padding: 12px 16px; border-right: 1px solid var(--border); }
-    .strip-item:last-child { border-right: none; }
-    .strip-val { font-size: 32px; font-weight: 900; color: var(--white); letter-spacing: -1px; line-height: 1; }
-    .strip-val .teal { color: var(--teal); }
-    .strip-lbl { font-size: 12px; color: var(--muted); margin-top: 5px; font-weight: 500; letter-spacing: 0.2px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 20px;
+  border: 1px solid rgba(62,207,108,0.25);
+  background: var(--green-dim);
+  font-size: 12px; font-weight: 600; color: var(--green);
+  margin-bottom: 32px; letter-spacing: 0.3px;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
 
-    /* ─── SECTION BASE ─────────────────────────────────────────── */
-    .section { padding: 96px clamp(20px,5%,80px); }
-    .section.alt { background: var(--navy2); }
-    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-    .section-h { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; color: var(--white); letter-spacing: -0.8px; line-height: 1.1; margin-bottom: 14px; }
-    .section-p { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 500px; }
-    .tc { text-align: center; }
-    .tc .section-p { margin: 0 auto 56px; }
+.hero h1 {
+  font-size: clamp(44px, 5.5vw, 72px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -3px;
+  color: var(--text1);
+  margin-bottom: 24px;
+}
+.hero h1 em { font-style: normal; color: var(--purple); }
 
-    /* ─── FEATURES ─────────────────────────────────────────────── */
-    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; max-width: 1040px; margin: 0 auto; }
-    .feat-cell { background: var(--navy2); padding: 32px 28px; transition: background .2s; }
-    .feat-cell:hover { background: var(--navy3); }
-    .feat-icon { width: 40px; height: 40px; margin-bottom: 18px; color: var(--teal); }
-    .feat-cell h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .feat-cell p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.hero-sub {
+  font-size: 18px; color: var(--text2);
+  line-height: 1.65; max-width: 460px;
+  margin-bottom: 40px;
+}
 
-    /* ─── HOW IT WORKS ─────────────────────────────────────────── */
-    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 860px; margin: 0 auto; }
-    .step { padding: 32px; background: var(--navy); border: 1px solid var(--border); border-radius: 14px; }
-    .step-n { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--teal); margin-bottom: 16px; text-transform: uppercase; }
-    .step h3 { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .step p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 
-    /* ─── DISCLAIMER ───────────────────────────────────────────── */
-    .disclaimer-box {
-      max-width: 860px; margin: 0 auto;
-      border: 1px solid rgba(251,191,36,0.25);
-      background: rgba(251,191,36,0.04);
-      border-radius: 14px; padding: 28px 32px;
-      display: flex; gap: 18px; align-items: flex-start;
-    }
-    .disclaimer-icon { flex-shrink: 0; margin-top: 2px; color: #FBBF24; }
-    .disclaimer-box h3 { font-size: 15px; font-weight: 700; color: #FDE68A; margin-bottom: 8px; }
-    .disclaimer-box p { font-size: 13px; color: #D1C888; line-height: 1.65; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 24px; border-radius: 10px;
+  background: var(--purple); color: #fff;
+  font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 30px rgba(108,99,216,0.35); }
 
-    /* ─── PRICING ──────────────────────────────────────────────── */
-    .pricing-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 720px; margin: 0 auto; }
-    .p-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 18px; padding: 36px 32px; position: relative; }
-    .p-card.pro { border-color: var(--teal); background: linear-gradient(160deg, rgba(20,184,166,0.07) 0%, var(--navy2) 55%); }
-    .p-badge { position: absolute; top: -1px; right: 24px; background: var(--teal); color: var(--navy); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 4px 12px; border-radius: 0 0 8px 8px; text-transform: uppercase; }
-    .p-tier { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-    .p-price { font-size: 52px; font-weight: 900; color: var(--white); letter-spacing: -2px; line-height: 1; }
-    .p-price sub { font-size: 18px; font-weight: 500; color: var(--muted); letter-spacing: 0; vertical-align: bottom; margin-bottom: 4px; display: inline-block; }
-    .p-desc { font-size: 13px; color: var(--muted); margin: 10px 0 24px; line-height: 1.55; }
-    .p-list { list-style: none; margin-bottom: 28px; }
-    .p-list li { font-size: 13px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; color: var(--text); }
-    .p-list li:last-child { border-bottom: none; }
-    .p-list li svg { flex-shrink: 0; }
-    .p-list li.off { color: var(--navy4); }
-    .p-list li.off svg { color: var(--navy4); }
-    .p-btn { display: block; width: 100%; text-align: center; padding: 13px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: .15s; }
-    .p-btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .p-btn-outline:hover { background: var(--navy3); border-color: rgba(255,255,255,0.12); }
-    .p-btn-fill { background: var(--teal); color: var(--navy); }
-    .p-btn-fill:hover { background: var(--teal-dim); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 24px; border-radius: 10px;
+  background: transparent; color: var(--text2);
+  font-size: 14px; font-weight: 600;
+  border: 1px solid var(--border); cursor: pointer; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--border-hover); color: var(--text1); }
 
-    /* ─── DOWNLOAD ─────────────────────────────────────────────── */
-    .dl-section { text-align: center; position: relative; overflow: hidden; }
-    .dl-glow { position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%); width: 600px; height: 500px; background: radial-gradient(circle, rgba(20,184,166,0.09) 0%, transparent 65%); pointer-events: none; }
-    .dl-section h2 { font-size: clamp(30px,4.5vw,52px); font-weight: 900; color: var(--white); letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 12px; }
-    .dl-section p { font-size: 16px; color: var(--muted); margin-bottom: 40px; }
-    .dl-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .dl-btn {
-      display: inline-flex; align-items: center; gap: 14px;
-      background: var(--navy3); border: 1px solid rgba(255,255,255,0.1);
-      color: var(--white); text-decoration: none;
-      padding: 14px 24px; border-radius: 12px; transition: .15s;
-      min-width: 180px;
-    }
-    .dl-btn:hover { border-color: var(--teal); background: rgba(20,184,166,0.07); }
-    .dl-btn svg { flex-shrink: 0; color: var(--white); }
-    .dl-btn-text small { display: block; font-size: 11px; color: var(--muted); }
-    .dl-btn-text strong { display: block; font-size: 16px; font-weight: 700; }
+.hero-note { margin-top: 20px; font-size: 12px; color: var(--text3); }
 
-    /* ─── FOOTER ───────────────────────────────────────────────── */
-    footer { border-top: 1px solid var(--border); padding: 48px clamp(20px,5%,80px) 32px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1040px; margin: 0 auto 40px; }
-    .footer-brand img { height: 28px; margin-bottom: 10px; display: block; }
-    .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.65; max-width: 220px; }
-    .footer-col h5 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy4); margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color .15s; }
-    .footer-col a:hover { color: var(--white); }
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1040px; margin: 0 auto; }
-    .footer-bottom p { font-size: 12px; color: var(--navy4); }
-    .footer-bottom a { font-size: 12px; color: var(--navy4); text-decoration: none; }
-    .footer-bottom a:hover { color: var(--muted); }
+/* HERO PHONES */
+.hero-phones {
+  position: relative;
+  height: 520px;
+}
 
-    /* ─── RESPONSIVE ───────────────────────────────────────────── */
-    @media (max-width: 960px) {
-      .feat-grid { grid-template-columns: repeat(2,1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 700px) {
-      .nav-center, .nav-right { display: none; }
-      .nav-mobile-toggle { display: block; }
-      .strip-inner { grid-template-columns: repeat(2,1fr); }
-      .strip-item:nth-child(2) { border-right: none; }
-      .strip-item:nth-child(3) { border-top: 1px solid var(--border); }
-      .strip-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
-      .feat-grid { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
-      .pricing-wrap { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .hero-actions { flex-direction: column; align-items: center; }
-      .hero-actions a { width: 100%; max-width: 300px; justify-content: center; }
-      .disclaimer-box { flex-direction: column; gap: 12px; }
-      .dl-btns { flex-direction: column; align-items: center; }
-      .dl-btn { width: 100%; max-width: 280px; justify-content: center; }
-      .footer-bottom { flex-direction: column; text-align: center; }
-    }
-    @media (max-width: 440px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .p-card { padding: 28px 20px; }
-      .strip-val { font-size: 26px; }
-    }
-  </style>
+.hero-glow {
+  position: absolute;
+  bottom: 20px; left: 50%; transform: translateX(-50%);
+  width: 340px; height: 220px;
+  background: rgba(108,99,216,0.2);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.hero-phone {
+  position: absolute;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+.hero-phone img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+  display: block;
+}
+
+.hero-phone-main {
+  width: 220px; height: 460px;
+  left: 40px; top: 50%; transform: translateY(-50%);
+  box-shadow: 0 48px 96px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.04);
+  z-index: 2;
+}
+.hero-phone-back {
+  width: 190px; height: 397px;
+  right: 0; top: 50%;
+  transform: translateY(-52%) rotate(5deg);
+  box-shadow: 0 32px 64px rgba(0,0,0,0.4);
+  border-color: rgba(255,255,255,0.06);
+  z-index: 1;
+}
+
+/* SCREENSHOTS STRIP */
+.screenshots-strip {
+  padding: 72px 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.screenshots-strip::before,
+.screenshots-strip::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 140px; z-index: 2; pointer-events: none;
+}
+.screenshots-strip::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
+.screenshots-strip::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
+
+.screenshots-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 80px;
+}
+
+.ss-phone {
+  width: 155px; height: 325px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+.ss-phone img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top; display: block;
+}
+.ss-phone:nth-child(1) { margin-top: 20px; }
+.ss-phone:nth-child(2) { margin-top: -10px; }
+.ss-phone:nth-child(3) { margin-top: 10px; }
+.ss-phone:nth-child(4) { margin-top: -16px; }
+.ss-phone:nth-child(5) { margin-top: 4px; }
+.ss-phone:hover { transform: translateY(-10px); }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--purple); text-transform: uppercase; margin-bottom: 16px;
+}
+
+/* FEATURE ROWS */
+.feat-rows {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 80px 48px;
+}
+
+.feat-rows-header {
+  margin-bottom: 72px;
+}
+.feat-rows-header h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 900; letter-spacing: -1.5px; line-height: 1.1;
+}
+
+.feat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border);
+}
+.feat-row:last-child { border-bottom: none; }
+.feat-row.reverse .feat-row-visual { order: -1; }
+
+.feat-row-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--purple); text-transform: uppercase; margin-bottom: 16px;
+}
+
+.feat-row-text h3 {
+  font-size: clamp(26px, 2.5vw, 36px);
+  font-weight: 900; letter-spacing: -1px;
+  line-height: 1.1; margin-bottom: 16px;
+}
+.feat-row-text p {
+  font-size: 16px; color: var(--text2);
+  line-height: 1.7;
+}
+
+.feat-row-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
+}
+.feat-tag {
+  font-size: 12px; font-weight: 600; color: var(--text3);
+  padding: 5px 12px; border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.feat-row-visual {
+  display: flex; justify-content: center; align-items: center;
+  position: relative;
+}
+
+.feat-phone-wrap { position: relative; }
+
+.feat-phone-glow {
+  position: absolute;
+  bottom: -40px; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 150px;
+  border-radius: 50%;
+  background: rgba(108,99,216,0.2);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.feat-phone {
+  width: 250px;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04);
+  position: relative; z-index: 1;
+}
+.feat-phone img { width: 100%; display: block; }
+
+/* PROOF STRIP */
+.proof-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 64px 48px;
+  text-align: center;
+}
+.proof-strip h2 {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800; letter-spacing: -1px;
+  max-width: 640px; margin: 0 auto 20px; line-height: 1.25;
+}
+.proof-strip p { font-size: 15px; color: var(--text2); max-width: 480px; margin: 0 auto; }
+.proof-tags {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-top: 32px;
+}
+.proof-tag {
+  font-size: 12px; font-weight: 600; color: var(--text2);
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--bg3);
+}
+
+/* HOW IT WORKS */
+.how {
+  padding: 120px 48px;
+  max-width: 1140px; margin: 0 auto;
+}
+.how h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 900; letter-spacing: -1.5px; margin-bottom: 64px;
+}
+.steps {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute; top: 28px;
+  left: calc(33.33% - 20px); right: calc(33.33% - 20px);
+  height: 1px; background: var(--border);
+}
+.step { padding: 0 32px 0 0; }
+.step:last-child { padding-right: 0; }
+.step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 800; color: var(--purple);
+  margin-bottom: 28px; position: relative; z-index: 1;
+}
+.step h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 10px; }
+.step p { font-size: 14px; color: var(--text2); line-height: 1.65; }
+
+/* PRICING */
+.pricing {
+  padding: 120px 48px;
+  max-width: 900px; margin: 0 auto;
+}
+.pricing-header { margin-bottom: 56px; }
+.pricing-header h2 {
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 900; letter-spacing: -1.5px; margin-bottom: 12px;
+}
+.pricing-header p { font-size: 16px; color: var(--text2); }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.price-card {
+  border-radius: 20px; padding: 40px;
+  border: 1px solid var(--border); background: var(--bg2);
+  transition: border-color 0.3s;
+}
+.price-card.featured {
+  border-color: rgba(108,99,216,0.5);
+  background: linear-gradient(135deg, rgba(108,99,216,0.08) 0%, var(--bg2) 60%);
+  position: relative; overflow: hidden;
+}
+.price-card.featured::before {
+  content: 'Most popular';
+  position: absolute; top: 18px; right: 18px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--purple);
+  padding: 4px 10px; border-radius: 20px;
+  background: var(--purple-dim); border: 1px solid rgba(108,99,216,0.3);
+}
+.price-tier {
+  font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 16px;
+}
+.price-card.featured .price-tier { color: var(--purple); }
+.price-amount {
+  font-size: 48px; font-weight: 900; letter-spacing: -2px;
+  color: var(--text1); margin-bottom: 4px;
+}
+.price-amount span { font-size: 18px; font-weight: 500; color: var(--text3); letter-spacing: 0; }
+.price-period { font-size: 13px; color: var(--text3); margin-bottom: 32px; }
+.price-divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+.price-features { list-style: none; margin-bottom: 36px; }
+.price-features li {
+  font-size: 14px; color: var(--text2);
+  padding: 8px 0; display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.price-features li:last-child { border-bottom: none; }
+.price-features li::before {
+  content: ''; width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%;
+  background-color: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8l3 3 6-6' stroke='%239090a8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.price-card.featured .price-features li::before {
+  background-color: var(--purple-dim); border-color: rgba(108,99,216,0.4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8l3 3 6-6' stroke='%236c63d8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.price-btn {
+  width: 100%; padding: 13px; border-radius: 10px;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; border: none;
+}
+.price-btn-outline {
+  background: transparent; color: var(--text2); border: 1px solid var(--border);
+}
+.price-btn-outline:hover { border-color: var(--border-hover); color: var(--text1); }
+.price-btn-fill { background: var(--purple); color: #fff; }
+.price-btn-fill:hover { box-shadow: 0 0 28px rgba(108,99,216,0.4); transform: translateY(-1px); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-meta { font-size: 12px; color: var(--text3); margin-top: 8px; }
+.footer-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: var(--text3); transition: color 0.2s; }
+.footer-links a:hover { color: var(--text1); }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 100px 24px 60px;
+    gap: 60px;
+  }
+  .hero-phones { order: -1; height: 380px; }
+  .hero-phone-main { width: 180px; height: 376px; left: 20px; }
+  .hero-phone-back { width: 155px; height: 324px; }
+
+  .screenshots-row { padding: 0 40px; gap: 14px; }
+  .ss-phone { width: 120px; height: 251px; }
+
+  .feat-rows { padding: 60px 24px; }
+  .feat-row { grid-template-columns: 1fr; gap: 48px; }
+  .feat-row.reverse .feat-row-visual { order: 0; }
+
+  .proof-strip { padding: 60px 24px; }
+
+  .how { padding: 80px 24px; }
+  .steps { grid-template-columns: 1fr; gap: 48px; }
+  .steps::before { display: none; }
+
+  .pricing { padding: 80px 24px; }
+  .pricing-grid { grid-template-columns: 1fr; }
+
+  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">
-    <img src="assets/logo_white.png" alt="SideStacks" />
-    <span>SideStacks</span>
-  </a>
-  <div class="nav-center">
-    <a href="#features">Features</a>
-    <a href="#how">How it works</a>
-    <a href="#pricing">Pricing</a>
-    <a href="contact.html">Contact</a>
-  </div>
-  <div class="nav-right">
-    <a href="contact.html" class="btn-nav-ghost">Support</a>
-    <a href="#download" class="btn-nav-solid">Download</a>
-  </div>
-  <button class="nav-mobile-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:28px;display:block;"></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Get started free</a>
 </nav>
-<div class="mobile-menu">
-  <a href="#features" onclick="this.closest('.mobile-menu').classList.remove('open')">Features</a>
-  <a href="#how" onclick="this.closest('.mobile-menu').classList.remove('open')">How it works</a>
-  <a href="#pricing" onclick="this.closest('.mobile-menu').classList.remove('open')">Pricing</a>
-  <a href="contact.html">Contact</a>
-  <a href="#download" class="btn-nav-solid" onclick="this.closest('.mobile-menu').classList.remove('open')">Download the app</a>
-</div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-pill">
-    <span class="hero-pill-dot"></span>
-    Now available on Android
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Now available on iOS
+    </div>
+    <h1>Track every hustle.<br><em>Keep</em> every dollar.</h1>
+    <p class="hero-sub">SideStacks is the finance app built for the way you actually earn — multiple income streams, no spreadsheets, total clarity.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on App Store
+      </a>
+      <a href="#" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.96.04l13.5-7.76-2.89-2.89-11.57 10.61zM.15 1.12C.06 1.35 0 1.6 0 1.88v20.24c0 .28.06.53.15.76l.06.06L11.35 12 .21 1.06l-.06.06zM20.76 9.58l-2.89-1.66-3.24 3.24 3.24 3.24 2.9-1.67c.83-.48.83-1.67-.01-2.15zM4.14.24L17.64 8c.31.18.54.43.67.71L7.03 9 4.14.24z"/></svg>
+        Coming to Android
+      </a>
+    </div>
+    <p class="hero-note">Free to start · No credit card required</p>
   </div>
-  <h1>Stop losing track<br />of <span class="accent">your money.</span></h1>
-  <p class="hero-sub">You're already putting in the work. SideStacks makes sure you actually know what you're earning, what you owe, and what you can claim back.</p>
-  <div class="hero-actions">
-    <a href="#download" class="btn-primary">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.35.74 3.15.8 1.2-.21 2.34-.91 3.62-.79 1.54.14 2.7.73 3.44 1.84-3.17 1.9-2.67 6.04.54 7.24-.64 1.7-1.46 3.37-2.75 4.79zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-      Download on Android
-    </a>
-    <a href="#features" class="btn-ghost">Explore features</a>
-  </div>
-  <div class="hero-screenshot">
-    <div class="screenshot-placeholder">
-      <img src="assets/logo_teal.png" alt="" />
-      <p>App screenshots coming soon</p>
+
+  <div class="hero-phones">
+    <div class="hero-glow"></div>
+    <div class="hero-phone hero-phone-main">
+      <img src="screenshot_1_dashboard.png" alt="SideStacks dashboard">
+    </div>
+    <div class="hero-phone hero-phone-back">
+      <img src="screenshot_2_stacks.png" alt="SideStacks stacks">
     </div>
   </div>
 </section>
 
-<!-- STRIP -->
-<div class="strip">
-  <div class="strip-inner">
-    <div class="strip-item">
-      <div class="strip-val">$<span class="teal">0</span></div>
-      <div class="strip-lbl">To get started</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-val"><span class="teal">5</span> min</div>
-      <div class="strip-lbl">Setup time</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-val"><span class="teal">ATO</span></div>
-      <div class="strip-lbl">Compliant mileage</div>
-    </div>
-    <div class="strip-item">
-      <div class="strip-val"><span class="teal">GST</span></div>
-      <div class="strip-lbl">BAS ready</div>
-    </div>
+<!-- SCREENSHOTS STRIP -->
+<div class="screenshots-strip">
+  <div class="screenshots-row">
+    <div class="ss-phone"><img src="screenshot_1_dashboard.png" alt="Dashboard"></div>
+    <div class="ss-phone"><img src="screenshot_2_stacks.png" alt="Stacks"></div>
+    <div class="ss-phone"><img src="screenshot_3_transactions.png" alt="Transactions"></div>
+    <div class="ss-phone"><img src="screenshot_4_analytics.png" alt="Analytics"></div>
+    <div class="ss-phone"><img src="screenshot_5_invoices.png" alt="Invoices"></div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<section class="section" id="features">
-  <div class="tc">
-    <p class="eyebrow">Features</p>
-    <h2 class="section-h">Built for how you actually work</h2>
-    <p class="section-p">No jargon. No 47-step setup. Just the tools you need to stay on top of your money without it taking over your life.</p>
+<!-- FEATURE ROWS -->
+<section class="feat-rows" id="features">
+  <div class="feat-rows-header">
+    <div class="section-label">Features</div>
+    <h2>Everything your side hustle actually needs</h2>
   </div>
-  <div class="feat-grid">
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-      <h3>Income &amp; Expense Tracking</h3>
-      <p>Add a transaction in the time it takes to unlock your phone. Every dollar in and out, across as many businesses as you run.</p>
+
+  <div class="feat-row">
+    <div class="feat-row-text">
+      <div class="feat-row-label">Track</div>
+      <h3>Every transaction, beautifully logged</h3>
+      <p>Record income and expenses per stack, add notes, filter by category or date. Every dollar accounted for — without the spreadsheet.</p>
+      <div class="feat-row-tags">
+        <span class="feat-tag">Income tracking</span>
+        <span class="feat-tag">Expense categories</span>
+        <span class="feat-tag">Smart filters</span>
+      </div>
     </div>
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-      <h3>Invoice Generation</h3>
-      <p>Send a proper invoice without needing Word, a template, or any of that. Fill in the details, hit send, get paid.</p>
+    <div class="feat-row-visual">
+      <div class="feat-phone-wrap">
+        <div class="feat-phone-glow"></div>
+        <div class="feat-phone"><img src="screenshot_3_transactions.png" alt="Transactions screen"></div>
+      </div>
     </div>
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-      <h3>Mileage Tracking</h3>
-      <p>Every work trip you drive is money back at tax time. Log it as you go and SideStacks works out your ATO deduction automatically.</p>
+  </div>
+
+  <div class="feat-row reverse">
+    <div class="feat-row-text">
+      <div class="feat-row-label">Analyse</div>
+      <h3>Know exactly where your money goes</h3>
+      <p>Profit trends, income vs expenses, margin breakdown — all automatic. See your best month, spot patterns, and make better decisions.</p>
+      <div class="feat-row-tags">
+        <span class="feat-tag">Profit trends</span>
+        <span class="feat-tag">Income vs expenses</span>
+        <span class="feat-tag">Spending insights</span>
+      </div>
     </div>
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      <h3>Tax &amp; BAS Estimates</h3>
-      <p>No more end-of-year panic. Get a running estimate of what you owe, your GST position, and what you can claim — updated as you go.</p>
+    <div class="feat-row-visual">
+      <div class="feat-phone-wrap">
+        <div class="feat-phone-glow"></div>
+        <div class="feat-phone"><img src="screenshot_4_analytics.png" alt="Analytics screen"></div>
+      </div>
     </div>
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      <h3>Bank Import</h3>
-      <p>Connect your bank once and pull in transactions automatically. Less manual entry, more time actually running your business.</p>
+  </div>
+
+  <div class="feat-row">
+    <div class="feat-row-text">
+      <div class="feat-row-label">Invoice</div>
+      <h3>Send invoices. Get paid faster.</h3>
+      <p>Create a professional invoice in seconds, assign it to a stack, and track paid, pending, and overdue — all from one screen. No more chasing clients in your notes app.</p>
+      <div class="feat-row-tags">
+        <span class="feat-tag">Invoice creation</span>
+        <span class="feat-tag">Payment tracking</span>
+        <span class="feat-tag">PDF export</span>
+      </div>
     </div>
-    <div class="feat-cell">
-      <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      <h3>Analytics Dashboard</h3>
-      <p>Find out which client actually pays the most per hour, which month tanks every year, and whether you're actually on track for your goals.</p>
+    <div class="feat-row-visual">
+      <div class="feat-phone-wrap">
+        <div class="feat-phone-glow"></div>
+        <div class="feat-phone"><img src="screenshot_5_invoices.png" alt="Invoices screen"></div>
+      </div>
     </div>
+  </div>
+
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof-strip">
+  <h2>Built for everyone making money on the side</h2>
+  <p>Whether you've got one hustle or five, SideStacks keeps the numbers clear so you can stay focused on the work.</p>
+  <div class="proof-tags">
+    <span class="proof-tag">Freelancers</span>
+    <span class="proof-tag">Content creators</span>
+    <span class="proof-tag">Resellers</span>
+    <span class="proof-tag">Photographers</span>
+    <span class="proof-tag">Tutors</span>
+    <span class="proof-tag">Graphic designers</span>
+    <span class="proof-tag">UGC creators</span>
+    <span class="proof-tag">Tradespeople</span>
+    <span class="proof-tag">Musicians</span>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section alt" id="how">
-  <div class="tc">
-    <p class="eyebrow">How it works</p>
-    <h2 class="section-h">Seriously, it takes minutes</h2>
-    <p class="section-p" style="margin-bottom:48px">No tutorial. No demo call. No "implementation consultant". Just download, create a stack, and start logging.</p>
-  </div>
+<section class="how" id="how">
+  <div class="section-label">How it works</div>
+  <h2>Up and running in minutes</h2>
   <div class="steps">
     <div class="step">
-      <p class="step-n">Step 01</p>
-      <h3>Create your SideStack</h3>
-      <p>Got a freelance gig, a reselling side hustle, and some content money coming in? Give each one its own stack so nothing bleeds together.</p>
+      <div class="step-num">01</div>
+      <h3>Create your Stacks</h3>
+      <p>Add one Stack for each income source. Give it a name, a colour, and an optional goal. Takes about 30 seconds.</p>
     </div>
     <div class="step">
-      <p class="step-n">Step 02</p>
-      <h3>Log or import transactions</h3>
-      <p>Tap to log something as it happens, or let the bank import handle the bulk of it. Either way, you're done in seconds, not an hour on Sunday night.</p>
+      <div class="step-num">02</div>
+      <h3>Log your money</h3>
+      <p>Record income and expenses as they happen. Categorise, add notes, attach invoices. Everything stays in one place.</p>
     </div>
     <div class="step">
-      <p class="step-n">Step 03</p>
-      <h3>Know your numbers</h3>
-      <p>Your dashboard updates as you go. You'll always know roughly what you've made, what you owe, and what you can claim — without waiting for tax time to find out.</p>
-    </div>
-  </div>
-</section>
-
-<!-- DISCLAIMER -->
-<section class="section">
-  <div class="disclaimer-box">
-    <svg class="disclaimer-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <div>
-      <h3>Heads up &mdash; these are estimates, not advice</h3>
-      <p>Everything SideStacks shows you &mdash; your tax estimate, GST position, BAS summary, mileage deduction &mdash; is calculated from the data <em>you</em> enter, using standard published rates. It's meant to keep you informed, not replace your accountant. Before you lodge anything or make a financial decision based on these numbers, please talk to a registered tax agent or accountant. They're worth it.</p>
+      <div class="step-num">03</div>
+      <h3>Watch it grow</h3>
+      <p>Your dashboard shows exactly how each hustle is performing. Adjust, focus, and hit your goals faster.</p>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="section alt" id="pricing">
-  <div class="tc">
-    <p class="eyebrow">Pricing</p>
-    <h2 class="section-h">Start free. Upgrade when ready.</h2>
-    <p class="section-p" style="margin-bottom:48px">No credit card required to get started.</p>
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <div class="section-label">Pricing</div>
+    <h2>Start free. Go Pro when you're ready.</h2>
+    <p>No hidden fees. Cancel anytime.</p>
   </div>
-  <div class="pricing-wrap">
-    <div class="p-card">
-      <p class="p-tier">Free</p>
-      <div class="p-price">$0</div>
-      <p class="p-desc">Everything you need to get started tracking your side hustle.</p>
-      <ul class="p-list">
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Unlimited stacks
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          90-day transaction history
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Invoice generation
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Mileage &amp; tax estimates
-        </li>
-        <li class="off">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Full transaction history
-        </li>
-        <li class="off">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Advanced analytics
-        </li>
-        <li class="off">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          Receipt attachments &amp; bank import
-        </li>
-      </ul>
-      <a href="#download" class="p-btn p-btn-outline">Get started free</a>
-    </div>
-    <div class="p-card pro">
-      <div class="p-badge">Popular</div>
-      <p class="p-tier">Pro</p>
-      <div class="p-price">$10<sub>/mo</sub></div>
-      <p class="p-desc">The full suite. Everything in Free, plus advanced tools for serious side hustlers.</p>
-      <ul class="p-list">
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Unlimited stacks
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Full transaction history
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Invoice generation &amp; PDF export
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Mileage &amp; tax estimates
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Advanced analytics dashboard
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Receipt photo attachments
-        </li>
-        <li>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#14B8A6"><polyline points="20 6 9 17 4 12"/></svg>
-          Bank account import
-        </li>
-      </ul>
-      <a href="#download" class="p-btn p-btn-fill">Get SideStacks Pro</a>
-    </div>
-  </div>
-</section>
+  <div class="pricing-grid">
 
-<!-- DOWNLOAD -->
-<section class="section dl-section" id="download">
-  <div class="dl-glow"></div>
-  <h2>Give it a go.<br />It&rsquo;s free.</h2>
-  <p>Download the app, create a stack, and see how it feels. No credit card, no trial period, no catch.</p>
-  <div class="dl-btns">
-    <a href="#" class="dl-btn">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.39.07 2.35.74 3.15.8 1.2-.21 2.34-.91 3.62-.79 1.54.14 2.7.73 3.44 1.84-3.17 1.9-2.67 6.04.54 7.24-.64 1.7-1.46 3.37-2.75 4.79zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-      <div class="dl-btn-text">
-        <small>Get it on</small>
-        <strong>Google Play</strong>
-      </div>
-    </a>
-    <a class="dl-btn" style="opacity:.4; pointer-events:none; cursor:default;">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      <div class="dl-btn-text">
-        <small>Coming soon to</small>
-        <strong>App Store</strong>
-      </div>
-    </a>
+    <div class="price-card">
+      <div class="price-tier">Free</div>
+      <div class="price-amount">$0</div>
+      <div class="price-period">forever</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>Up to 2 Stacks</li>
+        <li>Transaction tracking</li>
+        <li>Basic dashboard</li>
+        <li>Invoice creation</li>
+        <li>30-day history</li>
+      </ul>
+      <button class="price-btn price-btn-outline">Download free</button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">$6<span>/mo</span></div>
+      <div class="price-period">or $49/yr (save 32%)</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>Unlimited Stacks</li>
+        <li>Full transaction history</li>
+        <li>Goals &amp; progress tracking</li>
+        <li>AI-powered insights</li>
+        <li>Invoice tracking &amp; reminders</li>
+        <li>CSV &amp; PDF export</li>
+        <li>Mileage tracking</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="price-btn price-btn-fill">Start free trial</button>
+    </div>
+
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <img src="assets/logo_white.png" alt="SideStacks" />
-      <p>Made for Australians running side hustles, freelance work, and small businesses. Built to keep things simple.</p>
-    </div>
-    <div class="footer-col">
-      <h5>Product</h5>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#download">Download</a>
-    </div>
-    <div class="footer-col">
-      <h5>Legal</h5>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Use</a>
-    </div>
-    <div class="footer-col">
-      <h5>Company</h5>
-      <a href="contact.html">Contact</a>
-      <a href="contact.html">Support</a>
-    </div>
+  <div>
+    <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:24px;display:block;"></div>
+    <div class="footer-meta">ABN 19 813 173 221 · <a href="mailto:support@sidestacks.app" style="color:inherit">support@sidestacks.app</a></div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy; 2026 SideStacks. All rights reserved.</p>
-    <div style="display:flex; gap:16px;">
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
-    </div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="mailto:support@sidestacks.app">Contact</a>
   </div>
 </footer>
 
