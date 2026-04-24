@@ -34,6 +34,16 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Subtle radial glow behind the whole hero area */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 100vh; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(108,99,216,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(62,207,108,0.05) 0%, transparent 60%);
+}
 a { color: inherit; text-decoration: none; }
 
 /* NAV */
@@ -70,6 +80,7 @@ nav {
   padding: 120px 48px 80px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative; z-index: 1;
 }
 
 .hero-badge {
@@ -128,46 +139,32 @@ nav {
 
 .hero-note { margin-top: 20px; font-size: 12px; color: var(--text3); }
 
-/* HERO PHONES */
-.hero-phones {
+/* HERO IMAGE */
+.hero-visual {
   position: relative;
-  height: 520px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 .hero-glow {
   position: absolute;
-  bottom: 20px; left: 50%; transform: translateX(-50%);
-  width: 340px; height: 220px;
-  background: rgba(108,99,216,0.2);
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 360px; height: 220px;
+  background: rgba(108,99,216,0.18);
   filter: blur(70px);
   pointer-events: none;
+  z-index: 0;
 }
-
-.hero-phone {
-  position: absolute;
-  border-radius: 34px;
-  overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.1);
-}
-.hero-phone img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: top;
+.hero-img {
+  width: 100%;
+  max-width: 440px;
+  max-height: 640px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 24px;
   display: block;
-}
-
-.hero-phone-main {
-  width: 220px; height: 460px;
-  left: 40px; top: 50%; transform: translateY(-50%);
-  box-shadow: 0 48px 96px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.04);
-  z-index: 2;
-}
-.hero-phone-back {
-  width: 190px; height: 397px;
-  right: 0; top: 50%;
-  transform: translateY(-52%) rotate(5deg);
-  box-shadow: 0 32px 64px rgba(0,0,0,0.4);
-  border-color: rgba(255,255,255,0.06);
-  z-index: 1;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.65));
 }
 
 /* SCREENSHOTS STRIP */
@@ -182,7 +179,7 @@ nav {
 .screenshots-strip::before,
 .screenshots-strip::after {
   content: '';
-  position: absolute; top: 0; bottom: 0; width: 140px; z-index: 2; pointer-events: none;
+  position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
 }
 .screenshots-strip::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
 .screenshots-strip::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
@@ -191,29 +188,26 @@ nav {
   display: flex;
   gap: 20px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end;
   padding: 0 80px;
 }
 
-.ss-phone {
-  width: 155px; height: 325px;
-  border-radius: 22px;
-  overflow: hidden;
-  border: 1.5px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+.ss-card {
   flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
   transition: transform 0.3s;
+  width: 145px;
+  max-height: 320px;
 }
-.ss-phone img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: top; display: block;
-}
-.ss-phone:nth-child(1) { margin-top: 20px; }
-.ss-phone:nth-child(2) { margin-top: -10px; }
-.ss-phone:nth-child(3) { margin-top: 10px; }
-.ss-phone:nth-child(4) { margin-top: -16px; }
-.ss-phone:nth-child(5) { margin-top: 4px; }
-.ss-phone:hover { transform: translateY(-10px); }
+.ss-card img { width: 100%; display: block; object-fit: cover; object-position: top; }
+.ss-card:nth-child(1) { transform: translateY(14px); }
+.ss-card:nth-child(2) { transform: translateY(-8px); }
+.ss-card:nth-child(3) { transform: translateY(6px); }
+.ss-card:nth-child(4) { transform: translateY(-12px); }
+.ss-card:nth-child(5) { transform: translateY(4px); }
+.ss-card:hover { transform: translateY(-10px) !important; }
 
 /* SECTION LABEL */
 .section-label {
@@ -251,7 +245,6 @@ nav {
   font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
   color: var(--purple); text-transform: uppercase; margin-bottom: 16px;
 }
-
 .feat-row-text h3 {
   font-size: clamp(26px, 2.5vw, 36px);
   font-weight: 900; letter-spacing: -1px;
@@ -261,7 +254,6 @@ nav {
   font-size: 16px; color: var(--text2);
   line-height: 1.7;
 }
-
 .feat-row-tags {
   display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px;
 }
@@ -274,30 +266,17 @@ nav {
 
 .feat-row-visual {
   display: flex; justify-content: center; align-items: center;
-  position: relative;
 }
-
-.feat-phone-wrap { position: relative; }
-
-.feat-phone-glow {
-  position: absolute;
-  bottom: -40px; left: 50%; transform: translateX(-50%);
-  width: 200px; height: 150px;
-  border-radius: 50%;
-  background: rgba(108,99,216,0.2);
-  filter: blur(50px);
-  pointer-events: none;
+.feat-img {
+  width: 100%;
+  max-width: 280px;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 24px;
+  display: block;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,0.55));
 }
-
-.feat-phone {
-  width: 250px;
-  border-radius: 34px;
-  overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.1);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04);
-  position: relative; z-index: 1;
-}
-.feat-phone img { width: 100%; display: block; }
 
 /* PROOF STRIP */
 .proof-strip {
@@ -338,17 +317,19 @@ nav {
 }
 .steps::before {
   content: '';
-  position: absolute; top: 28px;
-  left: calc(33.33% - 20px); right: calc(33.33% - 20px);
-  height: 1px; background: var(--border);
+  position: absolute; top: 27px;
+  left: calc(33.33% + 8px); right: calc(33.33% + 8px);
+  height: 1px;
+  background: linear-gradient(to right, var(--border), rgba(108,99,216,0.3), var(--border));
 }
-.step { padding: 0 32px 0 0; }
+.step { padding: 0 40px 0 0; }
 .step:last-child { padding-right: 0; }
 .step-num {
-  width: 56px; height: 56px; border-radius: 50%;
-  border: 1px solid var(--border); background: var(--bg2);
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 1px solid rgba(108,99,216,0.3);
+  background: linear-gradient(135deg, var(--purple-dim), var(--bg2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 15px; font-weight: 800; color: var(--purple);
+  font-size: 14px; font-weight: 800; color: var(--purple);
   margin-bottom: 28px; position: relative; z-index: 1;
 }
 .step h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 10px; }
@@ -413,9 +394,10 @@ nav {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8l3 3 6-6' stroke='%236c63d8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 .price-btn {
-  width: 100%; padding: 13px; border-radius: 10px;
+  display: block; width: 100%; padding: 13px; border-radius: 10px;
   font-size: 14px; font-weight: 700; cursor: pointer;
-  transition: all 0.2s; border: none;
+  transition: all 0.2s; border: none; text-align: center;
+  text-decoration: none; box-sizing: border-box;
 }
 .price-btn-outline {
   background: transparent; color: var(--text2); border: 1px solid var(--border);
@@ -425,9 +407,12 @@ nav {
 .price-btn-fill:hover { box-shadow: 0 0 28px rgba(108,99,216,0.4); transform: translateY(-1px); }
 
 /* FOOTER */
-footer {
+.footer-outer {
   border-top: 1px solid var(--border);
-  padding: 48px;
+  background: var(--bg2);
+}
+footer {
+  padding: 40px 48px;
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 24px;
@@ -445,18 +430,18 @@ footer {
   .hero {
     grid-template-columns: 1fr;
     padding: 100px 24px 60px;
-    gap: 60px;
+    gap: 48px;
   }
-  .hero-phones { order: -1; height: 380px; }
-  .hero-phone-main { width: 180px; height: 376px; left: 20px; }
-  .hero-phone-back { width: 155px; height: 324px; }
+  .hero-visual { order: -1; }
+  .hero-img { max-width: 340px; margin: 0 auto; }
 
-  .screenshots-row { padding: 0 40px; gap: 14px; }
-  .ss-phone { width: 120px; height: 251px; }
+  .screenshots-row { padding: 0 40px; gap: 12px; }
+  .ss-card { width: 110px; }
 
   .feat-rows { padding: 60px 24px; }
-  .feat-row { grid-template-columns: 1fr; gap: 48px; }
+  .feat-row { grid-template-columns: 1fr; gap: 40px; }
   .feat-row.reverse .feat-row-visual { order: 0; }
+  .feat-img { max-width: 280px; margin: 0 auto; }
 
   .proof-strip { padding: 60px 24px; }
 
@@ -467,7 +452,7 @@ footer {
   .pricing { padding: 80px 24px; }
   .pricing-grid { grid-template-columns: 1fr; }
 
-  footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+  footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -506,25 +491,20 @@ footer {
     <p class="hero-note">Free to start · No credit card required</p>
   </div>
 
-  <div class="hero-phones">
+  <div class="hero-visual">
     <div class="hero-glow"></div>
-    <div class="hero-phone hero-phone-main">
-      <img src="screenshot_1_dashboard.png" alt="SideStacks dashboard">
-    </div>
-    <div class="hero-phone hero-phone-back">
-      <img src="screenshot_2_stacks.png" alt="SideStacks stacks">
-    </div>
+    <img src="sidestacks-08.png" alt="SideStacks app" class="hero-img">
   </div>
 </section>
 
 <!-- SCREENSHOTS STRIP -->
 <div class="screenshots-strip">
   <div class="screenshots-row">
-    <div class="ss-phone"><img src="screenshot_1_dashboard.png" alt="Dashboard"></div>
-    <div class="ss-phone"><img src="screenshot_2_stacks.png" alt="Stacks"></div>
-    <div class="ss-phone"><img src="screenshot_3_transactions.png" alt="Transactions"></div>
-    <div class="ss-phone"><img src="screenshot_4_analytics.png" alt="Analytics"></div>
-    <div class="ss-phone"><img src="screenshot_5_invoices.png" alt="Invoices"></div>
+    <div class="ss-card"><img src="sidestacks-01.png" alt="Dashboard"></div>
+    <div class="ss-card"><img src="sidestacks-03.png" alt="Transactions"></div>
+    <div class="ss-card"><img src="sidestacks-04.png" alt="Analytics"></div>
+    <div class="ss-card"><img src="sidestacks-06.png" alt="Invoices"></div>
+    <div class="ss-card"><img src="sidestacks-07.png" alt="Reports"></div>
   </div>
 </div>
 
@@ -547,10 +527,7 @@ footer {
       </div>
     </div>
     <div class="feat-row-visual">
-      <div class="feat-phone-wrap">
-        <div class="feat-phone-glow"></div>
-        <div class="feat-phone"><img src="screenshot_3_transactions.png" alt="Transactions screen"></div>
-      </div>
+      <img src="sidestacks-03.png" alt="Track every transaction" class="feat-img">
     </div>
   </div>
 
@@ -566,10 +543,7 @@ footer {
       </div>
     </div>
     <div class="feat-row-visual">
-      <div class="feat-phone-wrap">
-        <div class="feat-phone-glow"></div>
-        <div class="feat-phone"><img src="screenshot_4_analytics.png" alt="Analytics screen"></div>
-      </div>
+      <img src="sidestacks-04.png" alt="Know your numbers" class="feat-img">
     </div>
   </div>
 
@@ -585,10 +559,7 @@ footer {
       </div>
     </div>
     <div class="feat-row-visual">
-      <div class="feat-phone-wrap">
-        <div class="feat-phone-glow"></div>
-        <div class="feat-phone"><img src="screenshot_5_invoices.png" alt="Invoices screen"></div>
-      </div>
+      <img src="sidestacks-06.png" alt="Invoice like a pro" class="feat-img">
     </div>
   </div>
 
@@ -652,45 +623,47 @@ footer {
         <li>Up to 2 Stacks</li>
         <li>Transaction tracking</li>
         <li>Basic dashboard</li>
-        <li>Invoice creation</li>
-        <li>30-day history</li>
+        <li>90-day history</li>
+        <li>Mileage tracker</li>
       </ul>
-      <button class="price-btn price-btn-outline">Download free</button>
+      <a href="#" class="price-btn price-btn-outline">Download free</a>
     </div>
 
     <div class="price-card featured">
       <div class="price-tier">Pro</div>
-      <div class="price-amount">$6<span>/mo</span></div>
-      <div class="price-period">or $49/yr (save 32%)</div>
+      <div class="price-amount">$10<span>/mo</span></div>
+      <div class="price-period">or $100/yr AUD (save 17%)</div>
       <div class="price-divider"></div>
       <ul class="price-features">
         <li>Unlimited Stacks</li>
         <li>Full transaction history</li>
-        <li>Goals &amp; progress tracking</li>
-        <li>AI-powered insights</li>
-        <li>Invoice tracking &amp; reminders</li>
+        <li>PDF invoice generator</li>
+        <li>Full analytics — 14 charts</li>
+        <li>Tax estimates</li>
         <li>CSV &amp; PDF export</li>
-        <li>Mileage tracking</li>
-        <li>Priority support</li>
+        <li>Receipt scanner</li>
+        <li>Cash flow forecasting</li>
       </ul>
-      <button class="price-btn price-btn-fill">Start free trial</button>
+      <a href="#" class="price-btn price-btn-fill">Start free trial</a>
     </div>
 
   </div>
 </section>
 
 <!-- FOOTER -->
+<div class="footer-outer">
 <footer>
   <div>
-    <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:24px;display:block;"></div>
-    <div class="footer-meta">ABN 19 813 173 221 · <a href="mailto:support@sidestacks.app" style="color:inherit">support@sidestacks.app</a></div>
+    <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:22px;display:block;"></div>
+    <div class="footer-meta">ABN 19 813 173 221 &nbsp;·&nbsp; <a href="mailto:support@sidestacks.app" style="color:inherit">support@sidestacks.app</a></div>
   </div>
   <div class="footer-links">
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Service</a>
-    <a href="mailto:support@sidestacks.app">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
 </footer>
+</div>
 
 </body>
 </html>
