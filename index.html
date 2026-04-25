@@ -74,7 +74,7 @@ nav {
 .hero {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 480px;
+  grid-template-columns: 1fr 520px;
   gap: 60px;
   align-items: center;
   padding: 120px 48px 80px;
@@ -157,8 +157,8 @@ nav {
 }
 .hero-img {
   width: 100%;
-  max-width: 440px;
-  max-height: 640px;
+  max-width: 500px;
+  max-height: 680px;
   object-fit: cover;
   object-position: center top;
   border-radius: 24px;
@@ -169,45 +169,50 @@ nav {
 
 /* SCREENSHOTS STRIP */
 .screenshots-strip {
-  padding: 72px 0;
+  padding: 80px 0 60px;
   position: relative;
   overflow: hidden;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--bg2);
 }
+.screenshots-strip-label {
+  text-align: center;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--purple);
+  margin-bottom: 48px;
+}
 .screenshots-strip::before,
 .screenshots-strip::after {
   content: '';
-  position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+  position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
 }
 .screenshots-strip::before { left: 0; background: linear-gradient(to right, var(--bg2), transparent); }
 .screenshots-strip::after  { right: 0; background: linear-gradient(to left,  var(--bg2), transparent); }
 
 .screenshots-row {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 80px;
+  padding: 20px 80px 20px;
 }
 
 .ss-card {
   flex-shrink: 0;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-  transition: transform 0.3s;
-  width: 145px;
-  max-height: 320px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  width: 220px;
 }
-.ss-card img { width: 100%; display: block; object-fit: cover; object-position: top; }
-.ss-card:nth-child(1) { transform: translateY(14px); }
-.ss-card:nth-child(2) { transform: translateY(-8px); }
-.ss-card:nth-child(3) { transform: translateY(6px); }
-.ss-card:nth-child(4) { transform: translateY(-12px); }
-.ss-card:nth-child(5) { transform: translateY(4px); }
-.ss-card:hover { transform: translateY(-10px) !important; }
+.ss-card img { width: 100%; display: block; }
+.ss-card:nth-child(1) { transform: translateY(20px); }
+.ss-card:nth-child(2) { transform: translateY(-10px); }
+.ss-card:nth-child(3) { transform: translateY(0px); box-shadow: 0 32px 80px rgba(108,99,216,0.25), 0 24px 60px rgba(0,0,0,0.5); }
+.ss-card:nth-child(4) { transform: translateY(-10px); }
+.ss-card:nth-child(5) { transform: translateY(20px); }
+.ss-card:hover { transform: translateY(-16px) !important; box-shadow: 0 40px 80px rgba(0,0,0,0.6) !important; }
 
 /* SECTION LABEL */
 .section-label {
@@ -435,8 +440,8 @@ footer {
   .hero-visual { order: -1; }
   .hero-img { max-width: 340px; margin: 0 auto; }
 
-  .screenshots-row { padding: 0 40px; gap: 12px; }
-  .ss-card { width: 110px; }
+  .screenshots-row { padding: 0 24px; gap: 14px; overflow-x: auto; justify-content: flex-start; }
+  .ss-card { width: 160px; }
 
   .feat-rows { padding: 60px 24px; }
   .feat-row { grid-template-columns: 1fr; gap: 40px; }
@@ -460,7 +465,7 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:28px;display:block;"></div>
+  <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:56px;display:block;"></div>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#how">How it works</a></li>
@@ -499,6 +504,7 @@ footer {
 
 <!-- SCREENSHOTS STRIP -->
 <div class="screenshots-strip">
+  <div class="screenshots-strip-label">See it in action</div>
   <div class="screenshots-row">
     <div class="ss-card"><img src="sidestacks-01.png" alt="Dashboard"></div>
     <div class="ss-card"><img src="sidestacks-03.png" alt="Transactions"></div>
@@ -654,7 +660,7 @@ footer {
 <div class="footer-outer">
 <footer>
   <div>
-    <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:22px;display:block;"></div>
+    <div><img src="assets/logo_horizontal_white.svg" alt="SideStacks" style="height:44px;display:block;"></div>
     <div class="footer-meta">ABN 19 813 173 221 &nbsp;·&nbsp; <a href="mailto:support@sidestacks.app" style="color:inherit">support@sidestacks.app</a></div>
   </div>
   <div class="footer-links">
